@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Leweke
+    given-names: Sarah
+    orcid: https://orcid.org/0000-0002-5861-3673
+title: ""
+version: 1.0.0
+doi: 10.5281/zenodo.5592359
+date-released: 2021-10-22
