@@ -1,5 +1,9 @@
 function vecSpherHarmOut = vecSpherHarm(type,N,phi, t)
-
+ % Code written by S. Leweke (Uni Siegen) started in 2014 based on
+ % research code provided by Ch. Gerhards (TU Freiberg) from 2014
+ % Theoretical Background for implementation can be found in
+ % Fengler, M. (2005) Vector Spherical Harmonic and Vector Wavelet Based Non-Linear Galerkin Schemes for Solving the Incom- pressible Navier-Stokes Equation on the Sphere. PhD thesis. Universität Kaiserlautern. Section 15.3.2
+ 
 t = t(:);
 phi = phi(:);
 phi = phi';
