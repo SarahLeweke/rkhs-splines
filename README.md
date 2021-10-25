@@ -1,5 +1,5 @@
 # rkhs-splines
-Vector-valued and scalar-valued approximation splines in reproducing kernel Hilbert spaces for the reconstruction of neuronal current from MEG and EEG measurements.
+Vector-valued and scalar-valued approximation splines in reproducing kernel Hilbert spaces for the reconstruction of neuronal current from MEG and EEG measurements. The code published in this repository was used for producing the numerical results presented in [[4]](#4). Therein, the underlying mathematical theory for the vector spline approach is also explained. Besides, approximation as well as convergence statements are proven. We kindly ask for citing also the corresponding paper [[4]](#4), if the rkhs-splines are used for a publication. 
 
 ## Summary
 `spline_MEG` is a function reconstructing the neuronal current inside the brain from given magnetoencephalography (MEG) or electroencephalography (EEG) measurements.
