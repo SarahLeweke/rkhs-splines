@@ -2,7 +2,7 @@
 Vector-valued and scalar-valued approximation splines in reproducing kernel Hilbert spaces for the reconstruction of neuronal current from MEG and EEG measurements.
 
 ## Summary
-`spline_MEG` is a function reconstructing the neuronal current inside the brain from given magnetoencephalography (MEG) or electroencephalography measurements (EEG).
+`spline_MEG` is a function reconstructing the neuronal current inside the brain from given magnetoencephalography (MEG) or electroencephalography (EEG) measurements.
 The underlying model of the problem is given by:
 
  * The multiple-shell model with a ball modelling the human brain and three shells modelling the brain fluid, the scull, and the skalp, [[10]](#10).
@@ -18,29 +18,29 @@ In order to solve the inverse problems, splines based on reproducing kernel Hilb
 The splines can be used for the inversion of real data as well as for the inversion of generated synthetic data. 
 An inversion without regularization, the minimization of the regularized Tikhonov-functional via splines [[3]](#3),[[4]](#4), or a regularized penalized basis pursuit can be chosen [[12]](#12).  
 Five parameter choice methods are implemented for finding the best regularization parameter, namely an automatic as well as a manual L-curve method, the discrepancy principle, the quasi-optimality criterion, and generalized cross validation. 
-If an exact solution is known, the method resulting in the smalles normalized root mean square error on the plotting grid is chosen. 
+If an exact solution is known, the method resulting in the smallest normalized root mean square error on the plotting grid is chosen. 
 
-For the visualization of the results, matlab plots can be produced as well as a data export for tikz plots. 
+For the visualization of the results, MATLAB plots can be produced and data can be exported for TikZ plots. 
 For the sake of speed, all plots can be disabled. 
 
 `spline_MEG` can generate its own synthetic data based on the forward operator applied to orthonormal basis functions or splines. 
-In order to avoid the inverse crime, different parameter for constructing the data as well as for the inversion can be determined. 
+In order to avoid the inverse crime, different parameters for constructing the data as well as for the inversion can be specified. 
 Besides, there are two methods for calculating the spline matrix available.
 On the one hand, the faster method is based on the truncated singular value decomposition.
 On the other hand, a spline-free method based on quasi-Monte-Carlo integration and numerical differentiation is implemented.
-In all possible settings, the data can be noised with additive white Gaussian noise.
+In all possible settings, the data can be corrupted with additive white Gaussian noise.
 
 ## Technical Requirements
 
- * The code is produced and testes only with MATLAB R2021a, see [[8]](#8).
- * For the visualization of the L-curve in matlab the add-on **lablepoints** version 4.1.1. is used.
+ * The code is produced and tested only with MATLAB R2021a, see [[8]](#8).
+ * For the visualization of the L-curve in MATLAB, the add-on **labelpoints** version 4.1.1. is used.
    Adam Danz (2021). [labelpoints](https://www.mathworks.com/matlabcentral/fileexchange/46891-labelpoints), MATLAB Central File Exchange. Retrieved October 20, 2021.
  * Parallel computing requires the Parallel Computing Toolbox and is, hence, disabled by default. 
-    Only generating the synthetic test data via the quasi-Monte-Carlo integration can be calculated in parallel.
+    Only generating the synthetic test data via the quasi-Monte-Carlo integration can be performed in parallel.
 
 ## Installation 
 
- * Install [labelpoints](https://www.mathworks.com/matlabcentral/fileexchange/46891-labelpoints) toolbox via Matlab → Environment → Add-ons → Get Add-ons. Alternatively, the usage of this toolbox can be commented out in `solve_inverseSplineProblem.m` line 46.
+ * Install [labelpoints](https://www.mathworks.com/matlabcentral/fileexchange/46891-labelpoints) toolbox via MATLAB → Environment → Add-ons → Get Add-ons. Alternatively, the usage of this toolbox can be commented out in `solve_inverseSplineProblem.m` line 46.
  * Install Parallel Computing Toolbox, if the usage is desired. 
  * Save the folders `code`, `solution`, `data`, and `pics` in one path.
  * Open MATLAB and go into the folder `code`.
@@ -68,33 +68,35 @@ There, all possible values for the input arguments and their structures are list
 | `visualize_splineMatrix` | if true, a visualization of the used spline matrix is plotted|
 
 
-The model parameter, such as the radii of the shells and their conductivity as well as the positions of the measurement points are collected in `solution/deviceFile.mat` separated by the MEG and EEG application. 
-Therein, the particular quantities as well as  their units is stored.
+The model parameters, such as the radii of the shells and their conductivity as well as the positions of the measurement points, are collected in `solution/deviceFile.mat` separated by the MEG and EEG application. 
+Therein, the particular quantities as well as  their units are stored.
 In the case of the EEG problem, the used coefficients β<sub>n</sub><sup>(L)</sup> can be found in `device.EEG`.
 Note that these coefficients depend on the conductivites and the radii of the model. If these parameters change, the coefficients  β<sub>n</sub><sup>(L)</sup>  must be recalculated according to [Sec. 4 [7]](#7).
 
 ## Parallel Computing
 
-For running the quasi-Monte-Carlo integration in parallel, chosse `data_generatingCase = 2splines_avoidIC` and set the number of integration points in  `num_integration_point` in line 47 in `generate_splineData.m` according to the desired accuracy then uncommend line 217-218.
-Set additionally `parallel_computing = true` in the function argument validation of `integragte_quasiMonteCarlo_ball_scalarMEG.m`. 
-For acceptable accuracy within our synthetic test cases, we need 4.5e6 integration points. 
+For running the quasi-Monte-Carlo integration in parallel, choose `data_generatingCase = 2splines_avoidIC` and set the number of integration points in  `num_integration_point` in line 47 in `generate_splineData.m` according to the desired accuracy, then uncomment line 217-218.
+Additionally, set `parallel_computing = true` in the function argument validation of `integragte_quasiMonteCarlo_ball_scalarMEG.m`. 
+For acceptable accuracy within our synthetic test cases, we required 4.5e6 integration points. 
 The precalculated spline matrices can be found in `/solution` depending on the nodal width *h*.
 
 
 ## Reproducibility
 
 ### Approximation Splines
-The used sequences for generating the splines are coded in line 50-69 of `spline_MEEG`. Eventhough we have tested serveral nodal width *h* within our numerical tests, the best results were achieved with *h*=0.85.
-This is also the default value of the nodal with in the code. 
+The used sequences for generating the splines are coded in line 50-69 of `spline_MEEG`. Even though we have tested several nodal widths *h* within our numerical tests, the best results were achieved with *h*=0.85.
+This is also the default value of the nodal width in the code. 
 The used regularization parameter for the MEG synthetic spline test cases are stated in Table 1 and for the EEG synthetic spline test case in Table 2 of [[4]](#4).
 The numerical results of [[4]](#4) are entirely produced with this code.
+
 ### Synthetic Data
 All used parameters are stated in the paper [[4]](#4) as well as coded in `generate_splineData.m` for reproducing the non-noisy data. 
 Since no fixed seed was used for noising the data, the used data sets are stored in the folder `data` depending on the test case and the noise level.
-If a particular data set should be loaded, uncomment in `spline_MEEG` the line 123-124. Insert the precise path in line 123. 
+If a particular data set should be loaded, uncomment the lines 123-124 in `spline_MEEG`. Insert the precise path in line 123. 
 For the calculation of the corresponding exact solution, it is necessary to state `data_generatingCase` and `prob_case` according to the used data set.
+
 ### Real Data
-The used real data sets can be found in the folder `data`. Note that `data_real_scalarMEG` `data_real_vectorMEG` consists of exactly the same data. 
+The used real data sets can be found in the folder `data`. Note that `data_real_scalarMEG` and `data_real_vectorMEG` consists of exactly the same data. 
 There are two data files required due to the structure of the implementation. 
 
 ## References
